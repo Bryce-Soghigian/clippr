@@ -6,11 +6,6 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// Interface is the behaviors we expect from all runners
-type Interface interface {
-	Run(*WorkItem) error
-}
-
 // Runner is the type reponsible for running work items
 type Runner struct {
 	logger     *zap.Logger
@@ -18,10 +13,14 @@ type Runner struct {
 	video      editor.Video
 }
 
-func (r *Runner) Run(w *WorkItem) error {
-	action, err := GetActionFromFactory(w.Action)
+func (r *Runner) Run(w WorkItem) error {
+	newAction, err := GetActionFromFactory(w.Action)
 	if err != nil {
 		r.logger.Error("Failed to retrieve action from action factory")
+		return err
+	}
+	action, err := newAction(r.kubeClient, r.video, r.logger)
+	if err != nil {
 		return err
 	}
 	err = action.Run(w)

@@ -1,4 +1,4 @@
-package action
+package jobsv1
 
 import (
 	"testing"
@@ -10,7 +10,7 @@ import (
 
 func TestGetActionFactory(t *testing.T) {
 	// Test with an invalid action name
-	_, err = GetActionFromFactory("invalid_action_name")
+	_, err := GetActionFromFactory("invalid_action_name")
 	assert.Error(t, err)
 }
 

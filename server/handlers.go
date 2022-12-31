@@ -18,7 +18,7 @@ func (s *ClipprServer) handleIngestWorkItem(response http.ResponseWriter, reques
 		return
 	}
 	var workItems []*jobsv1.WorkItem
-	err = json.Unmarshal(body, workItems)
+	err = json.Unmarshal(body, &workItems)
 	if err != nil {
 		s.logger.Error(err.Error())
 		return
