@@ -3,13 +3,15 @@ package editor
 import (
 	"errors"
 	"fmt"
-	"github.com/tidwall/gjson"
-	ffmpeg "github.com/u2takey/ffmpeg-go"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/tidwall/gjson"
+	ffmpeg "github.com/u2takey/ffmpeg-go"
+	"go.uber.org/zap"
 )
 
 type Video struct {
@@ -31,6 +33,25 @@ type Output struct {
 
 func (OutputProcess Output) Run() error {
 	return OutputProcess.video.render()
+}
+
+func (V Video) Copy() Video {
+	cp := V
+	return cp
+}
+
+func (V *Video) Loop(n int64, logger *zap.Logger) (*Video, error) {
+	finalCut := []Video{}
+	times := int(n)
+	for i := 0; i < times; i++ {
+		finalCut = append(finalCut, V.Copy())
+	}
+	output, err := Merge(finalCut)
+	if err != nil {
+		zap.Error(err)
+		return nil, err
+	}
+	return &output, nil
 }
 
 func (V *Video) addKwArgs(key, value string) {
@@ -167,7 +188,7 @@ func (V Video) SubClip(start, end float64) Video {
 	return V.tempRender()
 }
 
-func Concat(videos []Video) (Video, error) {
+func Merge(videos []Video) (Video, error) {
 	var videoParts string
 	tempFolder := ""
 
