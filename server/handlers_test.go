@@ -4,15 +4,14 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"clippr/jobsv1"
 	"go.uber.org/zap"
-	"k8s.io/apimachinery/pkg/util/wait"
-	workqueue "k8s.io/apimachinery/pkg/util/workqueue"
+	"k8s.io/client-go/util/workqueue"
 )
 
 func TestHandleIngestWorkItemBadRequest(t *testing.T) {
