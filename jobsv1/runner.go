@@ -13,6 +13,14 @@ type Runner struct {
 	video      editor.Video
 }
 
+func NewRunner(kubeClient kubernetes.Interface, video editor.Video, logger *zap.Logger) *Runner {
+	return &Runner{
+		logger:     logger,
+		kubeClient: kubeClient,
+		video:      video,
+	}
+}
+
 func (r *Runner) Run(w WorkItem) error {
 	newAction, err := GetActionFromFactory(w.Action)
 	if err != nil {

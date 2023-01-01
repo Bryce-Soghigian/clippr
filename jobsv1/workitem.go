@@ -9,6 +9,7 @@ const (
 	LoopCountKey = "loopCount"
 	VideoUrlKey  = "videoUrl"
 	HostKey      = "host"
+	VideoS3Key   = "S3KeyVideo"
 )
 
 type WorkItem struct {
@@ -23,6 +24,14 @@ func (w *WorkItem) VideoUrl() string {
 		return ""
 	}
 	return w.Metadata[VideoUrlKey]
+}
+
+// VideoKeyS3 returns the key for a video from a given work item
+func (w *WorkItem) VideoKeyS3() string {
+	if w.Metadata == nil {
+		return ""
+	}
+	return w.Metadata[VideoS3Key]
 }
 
 // VideoHostPlatform will give us context into the type of video format we are recieving.
