@@ -22,7 +22,6 @@ type Factory func(
 	video editor.Video,
 	logger *zap.Logger,
 	// todo] S3 Client
-	// todo[bsoghigian] Video editor Client
 
 ) (Interface, error)
 
