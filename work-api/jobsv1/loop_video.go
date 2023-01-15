@@ -13,10 +13,10 @@ var VIDEO_LOOPER = "VideoLooperAction"
 type VideoLooper struct {
 	logger     *zap.Logger
 	kubeClient kubernetes.Interface
-	video      editor.Video
+	video      editor.Editor
 }
 
-func NewVideoLooper(logger *zap.Logger, client kubernetes.Interface, video editor.Video) *VideoLooper {
+func NewVideoLooper(logger *zap.Logger, client kubernetes.Interface, video editor.Editor) *VideoLooper {
 	return &VideoLooper{
 		logger:     logger,
 		kubeClient: client,
