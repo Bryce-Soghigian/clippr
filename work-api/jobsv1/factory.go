@@ -19,7 +19,7 @@ type Interface interface {
 // Factory is the default shape we want all actions to have
 type Factory func(
 	kubeClient kubernetes.Interface,
-	video editor.Video,
+	video editor.Editor,
 	logger *zap.Logger,
 	// todo] S3 Client
 
@@ -51,5 +51,4 @@ func RegisterAction(name string, factory Factory) {
 // Init is a function that runs at compile time when we build the binary for our application
 func init() {
 	// Register Actions in the factory here
-	RegisterAction(VIDEO_LOOPER, NewVideoLooper)
 }

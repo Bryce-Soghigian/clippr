@@ -10,10 +10,10 @@ import (
 type Runner struct {
 	logger     *zap.Logger
 	kubeClient kubernetes.Interface
-	video      editor.Video
+	video      editor.Editor
 }
 
-func NewRunner(kubeClient kubernetes.Interface, video editor.Video, logger *zap.Logger) *Runner {
+func NewRunner(kubeClient kubernetes.Interface, video editor.Editor, logger *zap.Logger) *Runner {
 	return &Runner{
 		logger:     logger,
 		kubeClient: kubeClient,

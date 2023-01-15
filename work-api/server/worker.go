@@ -45,7 +45,7 @@ func (s *ClipprServer) processActionFromWorkItem(item interface{}) error {
 
 func (s *ClipprServer) TriggerRunner(w jobsv1.WorkItem) error {
 	// Retrieve Video from S3 and pass it to the runner here.
-	runner := jobsv1.NewRunner(s.kubeClient, editor.Video{}, s.logger)
+	runner := jobsv1.NewRunner(s.kubeClient, editor.Editor{}, s.logger)
 	return runner.Run(w)
 
 }

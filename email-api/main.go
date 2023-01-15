@@ -22,7 +22,6 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
-
 	// Send the email.
 	if err := sendEmail(email); err != nil {
 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
@@ -35,6 +34,7 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	HandleLevelsScrape()
 	http.HandleFunc("/send", SendEmailHandler)
 	http.ListenAndServe(":8080", nil)
 }
